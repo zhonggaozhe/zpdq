@@ -5,6 +5,7 @@ import com.zgz.cpdq.table.base.BaseTable;
 import lombok.Data;
 import org.springframework.data.annotation.Transient;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
@@ -16,6 +17,7 @@ public class Humor extends BaseTable {
 
     private String title;
 
+    @Column(columnDefinition = "varchar(1000) default '' not null")
     private String content;
 
     private String weight;
