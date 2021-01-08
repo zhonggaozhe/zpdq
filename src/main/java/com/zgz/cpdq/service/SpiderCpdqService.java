@@ -112,7 +112,10 @@ public class SpiderCpdqService {
         String link3 = "https://duanziwang.com/category/%E7%BB%8F%E5%85%B8%E6%AE%B5%E5%AD%90/2/index.html";
         System.out.println(RegexUtil.matches(whiteRegex3, link3));
 
+        String url4 = "http://xiaohua.zol.com.cn/chaoji/1.html";
 
+        String whiteRegex4 = "http://xiaohua.zol.com.cn/chaoji/"+"\\d"+".html";
+        System.out.println(RegexUtil.matches(whiteRegex4, url4));
 
     }
 
