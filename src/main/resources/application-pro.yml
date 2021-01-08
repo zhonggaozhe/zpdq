@@ -6,7 +6,7 @@ spring:
     #driverClassName: com.mysql.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver
     logSlowSql: true
-    url: jdbc:mysql://39.100.79.119:3306/cadp_db?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/cadp_db?useUnicode=true&characterEncoding=utf-8
     username: user01
     password: HJJDHSUDHndjashjhj@293387YYbdsd
   jpa:
