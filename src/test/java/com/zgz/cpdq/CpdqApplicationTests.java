@@ -1,7 +1,7 @@
 package com.zgz.cpdq;
 
 import com.zgz.cpdq.handler.MenuSetDbHandler;
-import com.zgz.cpdq.service.SpiderCpdqService;
+import com.zgz.cpdq.service.spider.SpiderCpdqService;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

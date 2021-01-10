@@ -1,4 +1,4 @@
-package com.zgz.cpdq.pageVo;
+package com.zgz.cpdq.pageVo.cpdq;
 
 import com.xuxueli.crawler.annotation.PageFieldSelect;
 import com.xuxueli.crawler.annotation.PageSelect;

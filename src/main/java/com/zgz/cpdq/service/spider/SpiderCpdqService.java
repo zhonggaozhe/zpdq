@@ -1,17 +1,15 @@
-package com.zgz.cpdq.service;
+package com.zgz.cpdq.service.spider;
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.xuxueli.crawler.XxlCrawler;
 import com.xuxueli.crawler.parser.PageParser;
 import com.xuxueli.crawler.util.RegexUtil;
 import com.zgz.cpdq.dao.IMenuCategoryDao;
 import com.zgz.cpdq.dao.IMenuDataDao;
-import com.zgz.cpdq.pageVo.CategoryPageVo;
-import com.zgz.cpdq.pageVo.MenuPageVo;
+import com.zgz.cpdq.pageVo.cpdq.CategoryPageVo;
+import com.zgz.cpdq.pageVo.cpdq.MenuPageVo;
 import com.zgz.cpdq.redis.RedisUtil;
 import com.zgz.cpdq.table.MenuCateGory;
-import com.zgz.cpdq.table.MenuData;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -101,7 +99,7 @@ public class SpiderCpdqService {
         System.out.println(RegexUtil.matches(whiteRegex1, link1));
 
         try{
-            Class child_class = Class.forName("com.zgz.cpdq.pageVo.MaterialPageVo");
+            Class child_class = Class.forName("com.zgz.cpdq.pageVo.cpdq.MaterialPageVo");
             Object object = child_class.newInstance();
         }catch (Exception e){
 

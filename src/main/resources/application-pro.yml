@@ -22,7 +22,7 @@ spring:
     host: 127.0.0.1
     password: 123456
     port: 6379
-    timeout: 3000
+    timeout: 5000
     jedis:
       pool:
         max-idle: 500
@@ -35,3 +35,9 @@ spring:
 log:
   path: /data/logs/
   level: info
+
+redis:
+  queue:
+    key: cpdq_humor_key
+    pop:
+      timeout: 1000

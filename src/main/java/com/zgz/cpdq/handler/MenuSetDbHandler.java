@@ -1,7 +1,6 @@
 package com.zgz.cpdq.handler;
 
 import cn.hutool.core.util.PageUtil;
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xuxueli.crawler.XxlCrawler;
@@ -9,15 +8,13 @@ import com.xuxueli.crawler.parser.PageParser;
 import com.zgz.cpdq.dao.ICategoryDao;
 import com.zgz.cpdq.dao.IMenuCategoryDao;
 import com.zgz.cpdq.dao.IMenuDataDao;
-import com.zgz.cpdq.pageVo.CategoryPageVo;
-import com.zgz.cpdq.pageVo.MenuDetailsPageVo;
-import com.zgz.cpdq.pageVo.MenuPageVo;
+import com.zgz.cpdq.pageVo.cpdq.CategoryPageVo;
+import com.zgz.cpdq.pageVo.cpdq.MenuDetailsPageVo;
 import com.zgz.cpdq.redis.RedisUtil;
 import com.zgz.cpdq.table.Category;
 import com.zgz.cpdq.table.MenuCateGory;
 import com.zgz.cpdq.table.MenuData;
 import com.zgz.cpdq.util.ThreadPoolUtil;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

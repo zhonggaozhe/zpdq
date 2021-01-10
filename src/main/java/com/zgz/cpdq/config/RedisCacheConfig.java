@@ -1,6 +1,7 @@
 package com.zgz.cpdq.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import com.zgz.cpdq.redis.MessageReceiver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.Cache;
@@ -9,14 +10,37 @@ import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+//import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 
 @Slf4j
 @Configuration
 public class RedisCacheConfig extends CachingConfigurerSupport {
+
+
+    @Bean
+    public MessageReceiver consumeRedis() {
+        return new MessageReceiver();
+    }
+
+    @Bean
+    public ChannelTopic topic() {
+        return new ChannelTopic("topic_cpdq");
+    }
+
+    @Bean
+//    @ConditionalOnMissingBean({ChannelTopic.class, MessageReceiver.class})
+    public RedisMessageListenerContainer redisMessageListenerContainer(RedisConnectionFactory connectionFactory) {
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.addMessageListener(consumeRedis(), topic());
+        return container;
+    }
 
     /**
      * 自定义序列化
@@ -37,6 +61,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
         template.setConnectionFactory(redisConnectionFactory);
+        template.afterPropertiesSet();
         return template;
     }
 

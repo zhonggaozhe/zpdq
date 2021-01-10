@@ -32,6 +32,11 @@ public class HumorController {
 
     private static String key = "getXdData_page";
 
+    /**
+     * 精选数据列表
+     * @param pageNum
+     * @return
+     */
     @RequestMapping(value = "getXdData")
     public Object getXdData(int pageNum) {
         Map<String, Object> result = new HashMap<>();

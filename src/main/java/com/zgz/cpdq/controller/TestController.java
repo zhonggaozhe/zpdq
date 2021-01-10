@@ -5,8 +5,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zgz.cpdq.entity.UserInfo;
 import com.zgz.cpdq.handler.MenuSetDbHandler;
+import com.zgz.cpdq.redis.MessageConsumer;
+import com.zgz.cpdq.redis.MessageEntity;
+import com.zgz.cpdq.redis.MessageProducer;
 import com.zgz.cpdq.redis.RedisUtil;
-import com.zgz.cpdq.service.SpiderXhService;
+import com.zgz.cpdq.service.spider.SpiderXhService;
 import com.zgz.cpdq.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +33,12 @@ public class TestController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MessageProducer producer;
+
+    @Autowired
+    private MessageConsumer consumer;
+
     @RequestMapping(value = "/originalMenuDataHandler")
     public void cc() {
         menuSetDbHandler.originalMenuDataHandler();
@@ -44,6 +53,18 @@ public class TestController {
     @RequestMapping(value = "/getXhDaQuan")
     public void getXhDaQuan() {
         spiderXhService.getXhDaQuan();
+    }
+
+    @RequestMapping(value = "/getQsyk")
+    public void getQsyk() {
+        spiderXhService.getQsyk("http://www.17989.com/xiaohua/duanxiaohua/");
+    }
+
+    @RequestMapping(value = "/sendSubPubMeassage")
+    public void sendSubPubMeassage(MessageEntity messageEntity) {
+        String channel = "topic_cpdq";
+        producer.sendSubPubMeassage(channel , messageEntity);
+        consumer.start();
     }
 
 
