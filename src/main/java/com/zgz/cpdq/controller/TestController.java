@@ -39,26 +39,26 @@ public class TestController {
     @Autowired
     private MessageConsumer consumer;
 
-    @RequestMapping(value = "/originalMenuDataHandler")
-    public void cc() {
-        menuSetDbHandler.originalMenuDataHandler();
-    }
+//    @RequestMapping(value = "/originalMenuDataHandler")
+//    public void cc() {
+//        menuSetDbHandler.originalMenuDataHandler();
+//    }
 
 
-    @RequestMapping(value = "/getHumor")
-    public void getHumor() {
-        spiderXhService.getHumor();
-    }
+//    @RequestMapping(value = "/getHumor")
+//    public void getHumor() {
+//        spiderXhService.getHumor();
+//    }
 
-    @RequestMapping(value = "/getXhDaQuan")
-    public void getXhDaQuan() {
-        spiderXhService.getXhDaQuan();
-    }
+//    @RequestMapping(value = "/getXhDaQuan")
+//    public void getXhDaQuan() {
+//        spiderXhService.getXhDaQuan();
+//    }
 
-    @RequestMapping(value = "/getQsyk")
-    public void getQsyk() {
-        spiderXhService.getQsyk("http://www.17989.com/xiaohua/duanxiaohua/");
-    }
+//    @RequestMapping(value = "/getQsyk")
+//    public void getQsyk() {
+//        spiderXhService.getQsyk("http://www.17989.com/xiaohua/duanxiaohua/");
+//    }
 
     @RequestMapping(value = "/sendSubPubMeassage")
     public void sendSubPubMeassage(MessageEntity messageEntity) {

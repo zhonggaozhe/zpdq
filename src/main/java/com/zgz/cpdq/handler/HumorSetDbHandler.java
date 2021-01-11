@@ -145,6 +145,6 @@ public class HumorSetDbHandler {
         if (humors.size() > 0) {
             iHumorDao.saveAll(humors);
         }
-        log.info("轻松一刻数据入库 Size = {}", humors.size());
+        log.info("笑话大全数据入库 Size = {}", humors.size());
     }
 }

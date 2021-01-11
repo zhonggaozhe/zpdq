@@ -2,7 +2,9 @@ package com.zgz.cpdq.controller;
 
 import cn.hutool.core.date.DateUtil;
 import com.zgz.cpdq.HumorVo;
+import com.zgz.cpdq.constant.RedisKeyConstant;
 import com.zgz.cpdq.dao.IHumorDao;
+import com.zgz.cpdq.entity.CrawlUrl;
 import com.zgz.cpdq.redis.RedisUtil;
 import com.zgz.cpdq.service.UserService;
 import com.zgz.cpdq.table.Humor;
@@ -10,9 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,10 +35,24 @@ public class HumorController {
     @Autowired
     private RedisUtil redisUtil;
 
-    private static String key = "getXdData_page";
+    /**
+     * 添加抓取 URL
+     *
+     * @param crawlUrl
+     * @return
+     */
+    @RequestMapping(value = "addCrawlUrl", method = RequestMethod.POST)
+    public Object addCrawlUrl(@Valid @RequestBody CrawlUrl crawlUrl) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("statusCode", 200);
+        result.put("data", redisUtil.sSet(RedisKeyConstant.crawl_cache_urls, crawlUrl));
+        return result;
+    }
+
 
     /**
      * 精选数据列表
+     *
      * @param pageNum
      * @return
      */
@@ -41,8 +60,8 @@ public class HumorController {
     public Object getXdData(int pageNum) {
         Map<String, Object> result = new HashMap<>();
         result.put("statusCode", 200);
-        Object object = redisUtil.hget(key , pageNum+"");
-        if(object != null){
+        Object object = redisUtil.hget(RedisKeyConstant.getXdData_page, pageNum + "");
+        if (object != null) {
             result.put("data", object);
             return result;
         }
@@ -65,7 +84,7 @@ public class HumorController {
         });
 
         if (humorVoList.size() > 0) {
-            redisUtil.hset(key , pageNum+"" , humorVoList);
+            redisUtil.hset(RedisKeyConstant.getXdData_page, pageNum + "", humorVoList);
         }
         return humorVoList;
     }

@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.xuxueli.crawler.XxlCrawler;
 import com.xuxueli.crawler.parser.PageParser;
 import com.zgz.cpdq.constant.RedisKeyConstant;
+import com.zgz.cpdq.entity.CrawlUrl;
 import com.zgz.cpdq.enums.MessageTypeEnums;
 import com.zgz.cpdq.handler.HumorSetDbHandler;
 import com.zgz.cpdq.pageVo.qisongyike.QsykPageVo;
@@ -42,7 +43,6 @@ public class SpiderXhService {
                 .setWhiteUrlRegexs(whiteRegex3)
                 .setAllowSpread(true)
                 .setThreadCount(8)
-//                .setProxyMaker(new RandomProxyMaker().addProxy(proxy))
                 .setPageParser(new PageParser<XmPageVo>() {
                     @Override
                     public void parse(Document html, Element pageVoElement, XmPageVo pageVo) {
@@ -59,26 +59,27 @@ public class SpiderXhService {
     /**
      * 笑话大全
      * url http://xiaohua.zol.com.cn/neihan
+     * @param crawlUrl
      */
-    public void getXhDaQuan() {
+    public void getXhDaQuan(CrawlUrl crawlUrl) {
 //        String url = "http://xiaohua.zol.com.cn/chaoji/1.html";
 //        String whiteRegex4 = "http://xiaohua.zol.com.cn/chaoji/"+"\\d"+".html";
-        String url = "http://xiaohua.zol.com.cn/neihan/1.html";
-        String whiteRegex4 = "http://xiaohua.zol.com.cn/neihan/" + "\\d" + ".html";
+//        String url = "http://xiaohua.zol.com.cn/neihan/1.html";
+//        String whiteRegex4 = "http://xiaohua.zol.com.cn/neihan/" + "\\d" + ".html";
 
         XxlCrawler crawler = new XxlCrawler.Builder()
-                .setUrls(url)
-                .setWhiteUrlRegexs(whiteRegex4)
-                .setAllowSpread(true)
-                .setThreadCount(4)
-//                .setPageLoader(new HtmlUnitPageLoader())
+                .setUrls(crawlUrl.getUrls())
+                .setWhiteUrlRegexs(crawlUrl.getWhiteRegex())
+                .setAllowSpread(crawlUrl.isAllowSpread())
+                .setThreadCount(2)
+                .setPauseMillis(1000)
+                .setFailRetryCount(2)
                 .setPageParser(new PageParser<XhDqPageVo>() {
                     @Override
                     public void parse(Document html, Element pageVoElement, XhDqPageVo pageVo) {
                         // 解析封装 PageVo 对象
                         log.info("笑话大全拉取数据: {} ", JSONUtil.toJsonStr(pageVo));
                         producer.sendMeassage(new MessageEntity(RedisKeyConstant.qsyk_page_list_key, MessageTypeEnums.XHDQ, pageVo.getXmList()));
-//                        humorSetDbHandler.humorListHandler(pageVo.getXmList());
                     }
                 })
                 .build();
@@ -88,15 +89,18 @@ public class SpiderXhService {
     /**
      * 轻松一刻
      * http://www.17989.com/xiaohua/duanxiaohua/
+     * @param urls
      */
-    public void getQsyk(String... urls) {
-        String whiteRegex[] = {"http://www.17989.com/xiaohua/duanxiaohua/"
-                , "http://www.17989.com/xiaohua/duanxiaohua/" + "\\d" + ".htm",};
+    public void getQsyk(CrawlUrl urls) {
+//        String whiteRegex[] = {"http://www.17989.com/xiaohua/duanxiaohua/"
+//                , "http://www.17989.com/xiaohua/duanxiaohua/" + "\\d" + ".htm",};
         XxlCrawler crawler = new XxlCrawler.Builder()
-                .setUrls(urls)
-                .setWhiteUrlRegexs(whiteRegex)
-                .setAllowSpread(true)
-                .setThreadCount(4)
+                .setUrls(urls.getUrls())
+                .setWhiteUrlRegexs(urls.getWhiteRegex())
+                .setAllowSpread(urls.isAllowSpread())
+                .setThreadCount(2)
+                .setPauseMillis(1000)
+                .setFailRetryCount(2)
                 .setPageParser(new PageParser<QsykPageVo>() {
                     @Override
                     public void parse(Document html, Element pageVoElement, QsykPageVo pageVo) {
@@ -107,6 +111,14 @@ public class SpiderXhService {
                 })
                 .build();
         crawler.start(true);
+    }
+
+    public static void main(String[] args) {
+        String whiteRegex4 = "http://xiaohua.zol.com.cn/chaoji/"+"\\d"+".html";
+        System.out.println(whiteRegex4);
+        System.out.println("http://xiaohua.zol.com.cn/neihan/\\d.html");
+        System.out.println("http://www.17989.com/xiaohua/duanxiaohua/\\d.htm");
+        System.out.println("http://www.17989.com/xiaohua/duanxiaohua/" + "\\d" + ".htm");
     }
 
 
