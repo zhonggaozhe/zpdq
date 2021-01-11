@@ -39,7 +39,7 @@ public class XhScheduleTask {
     /**
      * 抓取数据源
      */
-    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?" ,fixedDelay = 3000)
     private void configureTasks() {
         log.info("执行定时扫描,抓取数据源:{} ", LocalDateTime.now());
         TimeInterval timer = DateUtil.timer();
