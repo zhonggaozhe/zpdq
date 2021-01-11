@@ -3,12 +3,9 @@ package com.zgz.cpdq.task;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
 import com.alibaba.fastjson.JSONObject;
-import com.zgz.cpdq.config.RedisCacheConfig;
 import com.zgz.cpdq.constant.RedisKeyConstant;
 import com.zgz.cpdq.entity.CrawlUrl;
 import com.zgz.cpdq.enums.SourceEnums;
-import com.zgz.cpdq.redis.MessageConsumer;
-import com.zgz.cpdq.redis.MessageProducer;
 import com.zgz.cpdq.redis.RedisLock;
 import com.zgz.cpdq.redis.RedisUtil;
 import com.zgz.cpdq.service.spider.SpiderXhService;
@@ -39,7 +36,7 @@ public class XhScheduleTask {
     /**
      * 抓取数据源
      */
-    @Scheduled(cron = "0 0/30 * * * ?" ,fixedDelay = 3000)
+    @Scheduled(cron = "0 0/30 * * * ?")
     private void configureTasks() {
         log.info("执行定时扫描,抓取数据源:{} ", LocalDateTime.now());
         TimeInterval timer = DateUtil.timer();
