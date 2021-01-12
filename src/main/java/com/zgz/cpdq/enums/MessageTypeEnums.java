@@ -5,5 +5,7 @@ import java.io.Serializable;
 
 public enum MessageTypeEnums implements Serializable {
     QSYK,
-    XHDQ;
+    XHDQ,
+    BDL,
+    ;
 }

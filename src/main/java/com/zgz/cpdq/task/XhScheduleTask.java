@@ -66,6 +66,9 @@ public class XhScheduleTask {
                         case QSYK:
                             spiderXhService.getQsyk(crawlUrl);
                             break;
+                        case BDL:
+                            spiderXhService.getBiedoule(crawlUrl);
+                            break;
                     }
                     redisUtil.setRemove(RedisKeyConstant.crawl_cache_urls, crawlUrl);
                 }

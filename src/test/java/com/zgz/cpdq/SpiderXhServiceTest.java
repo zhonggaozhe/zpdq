@@ -1,5 +1,6 @@
 package com.zgz.cpdq;
 
+import com.zgz.cpdq.entity.CrawlUrl;
 import com.zgz.cpdq.handler.HumorSetDbHandler;
 import com.zgz.cpdq.service.spider.SpiderXhService;
 import org.junit.jupiter.api.Test;
@@ -26,4 +27,13 @@ public class SpiderXhServiceTest {
 //    public void qsykListHandler(){
 //        humorSetDbHandler.qsykListHandler();
 //    }
+
+    @Test
+    public void getBiedouleData() {
+        CrawlUrl crawlUrl = new CrawlUrl();
+        crawlUrl.setAllowSpread(false);
+        crawlUrl.setUrls(new String[]{"https://www.biedoul.com/t/5pCe56yR5q615a2Q_20.html"});
+        crawlUrl.setWhiteRegex(new String[]{"https://www.biedoul.com/t/5pCe56yR5q615a2Q_20.html"});
+        spiderXhService.getBiedoule(crawlUrl);
+    }
 }

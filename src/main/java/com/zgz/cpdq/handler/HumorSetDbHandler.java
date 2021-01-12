@@ -4,6 +4,7 @@ import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.zgz.cpdq.constant.RedisKeyConstant;
 import com.zgz.cpdq.dao.IHumorDao;
+import com.zgz.cpdq.pageVo.biedoule.BdlDetailsPageVo;
 import com.zgz.cpdq.pageVo.qisongyike.QsykDetailsPageVo;
 import com.zgz.cpdq.pageVo.xiaohuadaquan.XhDqDeatilPageVo;
 import com.zgz.cpdq.redis.RedisUtil;
@@ -146,5 +147,42 @@ public class HumorSetDbHandler {
             iHumorDao.saveAll(humors);
         }
         log.info("笑话大全数据入库 Size = {}", humors.size());
+    }
+
+    /**
+     * 别逗了数据入库
+     *
+     * @param content
+     */
+    public void saveBdlData(Object content) {
+        List<BdlDetailsPageVo> bdlDetailsPageVoList = JSONArray.parseArray(content.toString() , BdlDetailsPageVo.class);
+        List<Humor> humors = new ArrayList<>();
+        bdlDetailsPageVoList.forEach(e -> {
+            int num = iHumorDao.countByThirdId(e.getId());
+            if (num <= 0) {
+                //数据不存在
+                humors.add(this.convertBdlToHumor(e));
+            }
+        });
+        //入库
+        if (humors.size() > 0) {
+            iHumorDao.saveAll(humors);
+        }
+        log.info("别逗了数据入库 Size = {}", humors.size());
+    }
+
+    private Humor convertBdlToHumor(BdlDetailsPageVo pageVo) {
+        Humor humor = new Humor();
+        humor.setContent(pageVo.getContent());
+        humor.setDateTime(new Date());
+        humor.setTitle(pageVo.getTitle());
+        humor.setUserId(RandomUtil.randomInt(1, 3000));
+        humor.setSource("别逗了");
+        humor.setThirdId(pageVo.getId().replaceAll("/article/" , ""));
+        humor.setCreateTime(new Date());
+        humor.setUpdateTime(new Date());
+        humor.setGoodNum(pageVo.getGoodNum() == null ? 0 : Integer.valueOf(pageVo.getGoodNum()));
+        humor.setBadNum(pageVo.getBadNum() == null ? 0 : Integer.valueOf(pageVo.getBadNum()));
+        return humor;
     }
 }

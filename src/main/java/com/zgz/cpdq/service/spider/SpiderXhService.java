@@ -7,6 +7,7 @@ import com.zgz.cpdq.constant.RedisKeyConstant;
 import com.zgz.cpdq.entity.CrawlUrl;
 import com.zgz.cpdq.enums.MessageTypeEnums;
 import com.zgz.cpdq.handler.HumorSetDbHandler;
+import com.zgz.cpdq.pageVo.biedoule.BdlPageVo;
 import com.zgz.cpdq.pageVo.qisongyike.QsykPageVo;
 import com.zgz.cpdq.pageVo.xiaohuadaquan.XhDqPageVo;
 import com.zgz.cpdq.pageVo.xiaohuadaquan.XmPageVo;
@@ -121,5 +122,28 @@ public class SpiderXhService {
         System.out.println("http://www.17989.com/xiaohua/duanxiaohua/" + "\\d" + ".htm");
     }
 
-
+    /**
+     * 别逗了
+     * url: https://www.biedoul.com/t/5pCe56yR5q615a2Q.html
+     * @param crawlUrl
+     */
+    public void getBiedoule(CrawlUrl crawlUrl) {
+        XxlCrawler crawler = new XxlCrawler.Builder()
+                .setUrls(crawlUrl.getUrls())
+                .setWhiteUrlRegexs(crawlUrl.getWhiteRegex())
+                .setAllowSpread(crawlUrl.isAllowSpread())
+                .setThreadCount(1)
+                .setPauseMillis(1000)
+                .setFailRetryCount(2)
+                .setPageParser(new PageParser<BdlPageVo>() {
+                    @Override
+                    public void parse(Document html, Element pageVoElement, BdlPageVo pageVo) {
+                        // 解析封装 PageVo 对象
+                        log.info("别逗了取数据: {} ", JSONUtil.toJsonStr(pageVo));
+                        producer.sendMeassage(new MessageEntity(RedisKeyConstant.qsyk_page_list_key, MessageTypeEnums.BDL, pageVo.getBdlDetailsPageVoList()));
+                    }
+                })
+                .build();
+        crawler.start(true);
+    }
 }

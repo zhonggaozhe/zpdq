@@ -9,7 +9,9 @@ import lombok.Getter;
 public enum SourceEnums {
 
     XHDQ("xhdq", "笑话大全"),
-    QSYK("qsyk", "轻松一刻");
+    QSYK("qsyk", "轻松一刻"),
+    BDL("bdl", "别逗了"),
+    ;
 
 
     private String source;

@@ -66,6 +66,9 @@ public class MessageConsumer extends Thread {
             case XHDQ:
                 humorSetDbHandler.saveXhdqData(message.getContent());
                 break;
+            case BDL:
+                humorSetDbHandler.saveBdlData(message.getContent());
+                break;
         }
 
     }
