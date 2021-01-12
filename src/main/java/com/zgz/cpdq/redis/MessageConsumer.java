@@ -39,6 +39,7 @@ public class MessageConsumer extends Thread {
                 log.info("redis消息队列 queueKey = {} 线阻塞程状态:{}", queueKey, Thread.currentThread().isInterrupted());
                 Object object = redisTemplate.opsForList().rightPop(queueKey, popTimeout, TimeUnit.SECONDS);
                 if (object == null) {
+                    log.info("redis消息队列 queueKey = {} ,获取队列数据为空 --------------flag = {}", queueKey, flag);
                     continue;
                 }
                 message = JSONObject.parseObject(object.toString(), MessageEntity.class);
@@ -56,10 +57,10 @@ public class MessageConsumer extends Thread {
      * @param message 队列消息体
      */
     private void doBusiness(MessageEntity message) {
-        if(message.getMessageTypeEnums() == null){
+        if (message.getMessageTypeEnums() == null) {
             return;
         }
-        switch (message.getMessageTypeEnums()){
+        switch (message.getMessageTypeEnums()) {
             case QSYK:
                 humorSetDbHandler.saveQsykData(message.getContent());
                 break;
