@@ -1,7 +1,7 @@
 package com.zgz.cpdq.controller;
 
 import cn.hutool.core.date.DateUtil;
-import com.zgz.cpdq.HumorVo;
+import com.zgz.cpdq.entity.HumorVo;
 import com.zgz.cpdq.constant.RedisKeyConstant;
 import com.zgz.cpdq.dao.IHumorDao;
 import com.zgz.cpdq.entity.CrawlUrl;

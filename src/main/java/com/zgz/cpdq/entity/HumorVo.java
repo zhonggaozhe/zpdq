@@ -1,4 +1,4 @@
-package com.zgz.cpdq;
+package com.zgz.cpdq.entity;
 
 import com.zgz.cpdq.entity.UserInfo;
 import lombok.Data;
