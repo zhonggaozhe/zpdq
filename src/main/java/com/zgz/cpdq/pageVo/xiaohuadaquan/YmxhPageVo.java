@@ -11,7 +11,7 @@ public class YmxhPageVo {
     @PageFieldSelect(cssQuery = "div.post-head > div > time:nth-child(1)", selectType = XxlCrawlerConf.SelectType.TEXT)
     private String dateTime;
 
-    @PageFieldSelect(cssQuery = "div.post-content > p", selectType = XxlCrawlerConf.SelectType.TEXT)
+    @PageFieldSelect(cssQuery = "div.post-content > p", selectType = XxlCrawlerConf.SelectType.HTML)
     private String content;
 
     //#\33 5088 > div.post-content > p

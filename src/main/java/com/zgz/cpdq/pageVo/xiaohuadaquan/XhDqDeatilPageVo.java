@@ -12,7 +12,7 @@ public class XhDqDeatilPageVo {
     @PageFieldSelect(cssQuery = "span.article-title > a", selectType = XxlCrawlerConf.SelectType.TEXT)
     private String title;
 
-    @PageFieldSelect(cssQuery = "div.summary-text", selectType = XxlCrawlerConf.SelectType.TEXT)
+    @PageFieldSelect(cssQuery = "div.summary-text", selectType = XxlCrawlerConf.SelectType.HTML)
     private String content;
 
     @PageFieldSelect(cssQuery = "div.article-commentbar.articleCommentbar.clearfix", selectType = XxlCrawlerConf.SelectType.ATTR , selectVal = "data-id")
