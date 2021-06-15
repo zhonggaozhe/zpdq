@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS cadp_db
+DEFAULT CHARACTER SET utf8mb4
+DEFAULT COLLATE utf8mb4_0900_ai_ci;
+
+USE cadp_db;
+
+
+CREATE USER 'user01'@'127.0.0.1' IDENTIFIED BY 'HJJDHSUDHndjashjhj@293387YYbdsd';
+GRANT ALL ON cadp_db.* TO 'user01'@'127.0.0.1';
+flush privileges;
